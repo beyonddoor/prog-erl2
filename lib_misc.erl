@@ -735,3 +735,13 @@ bad_function(A, _) ->
 
 deliberate_error1(A) ->
     bad_function(A, 12).
+
+start(Fs) ->
+    spawn(fun() ->
+        [spawn_link(F) || F <- Fs],
+        receive
+        after
+            infinity -> true
+        end
+    end).
+    
